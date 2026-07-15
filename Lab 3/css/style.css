@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f4f8;
+    margin: 0;
+    padding: 30px;
+    color: #222;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+form {
+    background-color: white;
+    max-width: 600px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+label {
+    display: inline-block;
+    margin-top: 12px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+input[type="radio"] {
+    width: auto;
+    margin-left: 10px;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #5477c5;
+    border-color: #5477c5;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    background-color: #315da8;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #244882;
+}
+
+#city,
+#latitude,
+#longitude {
+    font-weight: bold;
+}
+
+#usernameError,
+#passwordError {
+    display: inline-block;
+    margin-top: 4px;
+    font-weight: bold;
+}
+
+#passwordSuggestion {
+    display: inline-block;
+    margin-top: 4px;
+    color: #315da8;
+    font-size: 14px;
+}
+
+br {
+    line-height: 1.8;
+}
