@@ -1,92 +1,105 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f4f8;
+    background: linear-gradient(to bottom, #c8f4d5, #d6f5ff);
     margin: 0;
     padding: 30px;
-    color: #222;
+    text-align: center;
 }
 
 h1 {
-    text-align: center;
-    margin-bottom: 25px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 3rem;
+    color: #2f4f4f;
+    margin-bottom: 10px;
 }
 
-form {
-    background-color: white;
-    max-width: 600px;
-    margin: auto;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+p {
+    color: #555555;
 }
 
-label {
-    display: inline-block;
-    margin-top: 12px;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input[type="text"],
-input[type="password"],
-select {
-    width: 100%;
-    box-sizing: border-box;
+input {
     padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 8px;
-    border: 1px solid #aaa;
-    border-radius: 6px;
+    width: 220px;
     font-size: 16px;
-}
-
-input[type="radio"] {
-    width: auto;
-    margin-left: 10px;
-}
-
-input:focus,
-select:focus {
-    outline: 2px solid #5477c5;
-    border-color: #5477c5;
+    border: 1px solid #999999;
+    border-radius: 4px;
 }
 
 button {
-    width: 100%;
-    margin-top: 20px;
-    padding: 12px;
-    border: none;
-    border-radius: 7px;
-    background-color: #315da8;
-    color: white;
-    font-size: 17px;
+    padding: 10px 18px;
+    margin: 5px;
+    font-size: 16px;
     cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: #6ac045;
+    color: white;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
 button:hover {
-    background-color: #244882;
+    background-color: #4d9f2f;
+    transform: scale(1.03);
 }
 
-#city,
-#latitude,
-#longitude {
+#error {
+    color: red;
     font-weight: bold;
+    margin-top: 15px;
 }
 
-#usernameError,
-#passwordError {
-    display: inline-block;
-    margin-top: 4px;
-    font-weight: bold;
+#result {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-#passwordSuggestion {
-    display: inline-block;
-    margin-top: 4px;
-    color: #315da8;
-    font-size: 14px;
+.character-card {
+    background-color: white;
+    width: 280px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
 }
 
-br {
-    line-height: 1.8;
+.character-card:hover {
+    transform: scale(1.03);
+}
+
+.character-card img {
+    width: 200px;
+    border-radius: 8px;
+}
+
+.character-card h2 {
+    color: #222222;
+    margin-bottom: 10px;
+}
+
+.character-card p {
+    margin: 8px 0;
+}
+
+.character-card {
+    background-color: white;
+    width: 280px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.character-card img {
+    width: 200px;
+    border-radius: 8px;
+}
+
+.character-card h2 {
+    color: #222222;
+}
+
+.character-card p {
+    margin: 8px 0;
 }

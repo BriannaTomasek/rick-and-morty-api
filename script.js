@@ -1,233 +1,85 @@
-document.querySelector("#zip").addEventListener("change", displayCity);
-document.querySelector("#state").addEventListener("change", loadCounties);
-document.querySelector("#username").addEventListener("change", checkUsername);
-document.querySelector("#password").addEventListener("click", suggestPassword);
-document.querySelector("#signupForm").addEventListener("submit", validateForm);
+document.querySelector("#searchBtn").addEventListener("click", searchCharacter);
 
-// The rubric says to call this function directly.
-loadStates();
+document.querySelector("#randomBtn").addEventListener("click", randomCharacter);
 
-async function displayCity() {
-    const zipCode = document.querySelector("#zip").value.trim();
-    const city = document.querySelector("#city");
-    const latitude = document.querySelector("#latitude");
-    const longitude = document.querySelector("#longitude");
-
-    try {
-        const url =
-            `https://csumb.space/api/cityInfoAPI.php?zip=${encodeURIComponent(zipCode)}`;
-
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data === false) {
-            city.textContent = "Zip code not found";
-            city.style.color = "red";
-            latitude.textContent = "";
-            longitude.textContent = "";
-            return;
-        }
-
-        city.textContent = data.city;
-        city.style.color = "green";
-        latitude.textContent = data.latitude;
-        longitude.textContent = data.longitude;
-    } catch (error) {
-        city.textContent = "Unable to retrieve city";
-        city.style.color = "red";
-        latitude.textContent = "";
-        longitude.textContent = "";
-        console.error(error);
+document.querySelector("#characterName").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        searchCharacter();
     }
-}
+});
 
-async function loadStates() {
-    const stateMenu = document.querySelector("#state");
 
-    stateMenu.textContent = "";
+function searchCharacter() {
+    const name = document.querySelector("#characterName").value.trim();
 
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = "Select One";
-    stateMenu.appendChild(defaultOption);
+    document.querySelector("#error").textContent = "";
+    document.querySelector("#result").innerHTML = "";
 
-    try {
-        const url = "https://csumb.space/api/allStatesAPI.php";
-        const response = await fetch(url);
-        const data = await response.json();
-
-        for (const item of data) {
-            const option = document.createElement("option");
-
-            option.value = item.usps;
-            option.textContent = item.state;
-
-            stateMenu.appendChild(option);
-        }
-    } catch (error) {
-        console.error(error);
-
-        stateMenu.textContent = "";
-
-        const errorOption = document.createElement("option");
-        errorOption.value = "";
-        errorOption.textContent = "Unable to load states";
-
-        stateMenu.appendChild(errorOption);
-    }
-}
-
-async function loadCounties() {
-    const state = document.querySelector("#state").value;
-    const countyMenu = document.querySelector("#county");
-
-    countyMenu.textContent = "";
-
-    if (state === "") {
-        const option = document.createElement("option");
-        option.value = "";
-        option.textContent = "Select a state first";
-        countyMenu.appendChild(option);
+    if (name === "") {
+        document.querySelector("#error").textContent =
+            "Please enter a character name.";
         return;
     }
 
-    try {
-        const url =
-            `https://csumb.space/api/countyListAPI.php?state=${encodeURIComponent(state)}`;
+    document.querySelector("#result").textContent = "Opening a portal...";
 
-        const response = await fetch(url);
-        const data = await response.json();
+    fetch("https://rickandmortyapi.com/api/character/?name=" +
+        encodeURIComponent(name))
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error("Character not found");
+            }
 
-        const defaultOption = document.createElement("option");
-        defaultOption.value = "";
-        defaultOption.textContent = "Select One";
-        countyMenu.appendChild(defaultOption);
-
-        for (const county of data) {
-            const option = document.createElement("option");
-
-            // Handles either a county string or an object returned by the API.
-            const countyName =
-                typeof county === "string"
-                    ? county
-                    : county.county || county.county_name || county.name;
-
-            option.value = countyName;
-            option.textContent = countyName;
-
-            countyMenu.appendChild(option);
-        }
-    } catch (error) {
-        console.error(error);
-
-        const option = document.createElement("option");
-        option.value = "";
-        option.textContent = "Unable to load counties";
-        countyMenu.appendChild(option);
-    }
+            return response.json();
+        })
+        .then(function(data) {
+            const character = data.results[0];
+            displayCharacter(character);
+        })
+        .catch(function() {
+            document.querySelector("#result").innerHTML = "";
+            document.querySelector("#error").textContent =
+                "Wubba Lubba Dub Dub! Character not found.";
+        });
 }
 
-async function checkUsername() {
-    const username = document.querySelector("#username").value.trim();
-    const usernameError = document.querySelector("#usernameError");
 
-    if (username.length === 0) {
-        usernameError.textContent = "Username required";
-        usernameError.style.color = "red";
-        return false;
-    }
+function randomCharacter() {
+    const randomId = Math.floor(Math.random() * 826) + 1;
 
-    try {
-        const url =
-            `https://csumb.space/api/usernamesAPI.php?username=${encodeURIComponent(username)}`;
+    document.querySelector("#characterName").value = "";
+    document.querySelector("#error").textContent = "";
+    document.querySelector("#result").textContent =
+    "Traveling to another dimension...";
 
-        const response = await fetch(url);
-        const data = await response.json();
+    fetch("https://rickandmortyapi.com/api/character/" + randomId)
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error("Character could not be loaded");
+            }
 
-        if (data.available) {
-            usernameError.textContent = "Username available!";
-            usernameError.style.color = "green";
-            return true;
-        }
-
-        usernameError.textContent = "Username taken";
-        usernameError.style.color = "red";
-        return false;
-    } catch (error) {
-        usernameError.textContent = "Unable to check username";
-        usernameError.style.color = "red";
-        console.error(error);
-        return false;
-    }
+            return response.json();
+        })
+        .then(function(character) {
+            displayCharacter(character);
+        })
+        .catch(function() {
+            document.querySelector("#result").innerHTML = "";
+            document.querySelector("#error").textContent =
+                 "Wubba Lubba Dub Dub! Unable to load a random character.";
+        });
 }
 
-async function suggestPassword() {
-    const passwordSuggestion = document.querySelector("#passwordSuggestion");
 
-    try {
-        const url =
-            "https://csumb.space/api/suggestedPassword.php?length=8";
-
-        const response = await fetch(url);
-        const data = await response.json();
-
-        let suggestedPassword;
-
-        if (typeof data === "string") {
-            suggestedPassword = data;
-        } else {
-            suggestedPassword =
-                data.password ||
-                data.suggestedPassword ||
-                data.suggested_password;
-        }
-
-        passwordSuggestion.textContent =
-            `Suggested password: ${suggestedPassword}`;
-    } catch (error) {
-        passwordSuggestion.textContent =
-            "Unable to generate password suggestion";
-        console.error(error);
-    }
-}
-
-async function validateForm(event) {
-    event.preventDefault();
-
-    let isValid = true;
-
-    const username = document.querySelector("#username").value.trim();
-    const password = document.querySelector("#password").value;
-    const passwordAgain = document.querySelector("#passwordAgain").value;
-    const usernameError = document.querySelector("#usernameError");
-    const passwordError = document.querySelector("#passwordError");
-
-    passwordError.textContent = "";
-
-    if (username.length === 0) {
-        usernameError.textContent = "Username required";
-        usernameError.style.color = "red";
-        isValid = false;
-    } else {
-        const usernameAvailable = await checkUsername();
-
-        if (usernameAvailable === false) {
-            isValid = false;
-        }
-    }
-
-    if (password.length < 6) {
-        passwordError.textContent =
-            "Password must have at least 6 characters";
-        passwordError.style.color = "red";
-        isValid = false;
-    } else if (password !== passwordAgain) {
-        passwordError.textContent = "Passwords do not match";
-        passwordError.style.color = "red";
-        isValid = false;
-    }
-
-    if (isValid) {
-        document.querySelector("#signupForm").submit();
-    }
+function displayCharacter(character) {
+    document.querySelector("#result").innerHTML = `
+        <div class="character-card">
+            <img src="${character.image}" alt="${character.name}">
+            <h2>${character.name}</h2>
+            <p><strong>Status:</strong> ${character.status}</p>
+            <p><strong>Species:</strong> ${character.species}</p>
+            <p><strong>Gender:</strong> ${character.gender}</p>
+            <p><strong>Origin:</strong> ${character.origin.name}</p>
+        </div>
+    `;
 }

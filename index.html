@@ -1,71 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Sign Up Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rick and Morty Character Search</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-<h1>Sign Up Form</h1>
+    <h1>Rick and Morty Character Search</h1>
 
-<link rel="stylesheet" href="css/style.css">
+    <p>Enter a character name.</p>
 
-<form id="signupForm" action="welcome.html">
+    <input
+    type="text"
+    id="characterName"
+    placeholder="Rick">
 
-    <label>First Name:
-        <input type="text" id="fName" name="fName"><br>
-    </label>
+        <button id="searchBtn">
+    Search
+        </button>
 
-    <label>Last Name:
-        <input type="text" id="lName" name="lName"><br>
-    </label>
+        <button id="randomBtn">
+    Random Character
+        </button>
 
-    Gender:
-    <label><input type="radio" name="gender" value="m"> Male</label>
-    <label><input type="radio" name="gender" value="f"> Female</label><br>
+    <p id="error"></p>
 
-    <label>Zip Code:
-        <input type="text" id="zip" name="zip"><br>
-    </label>
+    <div id="result"></div>
 
-    City: <span id="city"></span><br>
-    Latitude: <span id="latitude"></span><br>
-    Longitude: <span id="longitude"></span><br>
-
-    <label>State:
-        <select id="state" name="state">
-            <option value="">Select One</option>
-            <option value="ca">California</option>
-            <option value="ny">New York</option>
-            <option value="tx">Texas</option>
-        </select><br>
-    </label>
-
-    <label>Select a County:
-        <select id="county" name="county"></select><br>
-    </label>
-
-    <label>Desired Username:
-        <input type="text" id="username" name="username">
-    </label>
-    <span id="usernameError"></span><br>
-
-    <label>Password:
-    <input type="password" id="password" name="password">
-</label>
-<span id="passwordSuggestion"></span><br>
-
-    <label>Type Password Again:
-        <input type="password" id="passwordAgain" name="passwordAgain"><br>
-    </label>
-
-    <span id="passwordError"></span><br>
-
-    <button>Sign up!</button>
-
-</form>
-
-<script src="js/script.js"></script>
+    <script src="js/script.js"></script>
 
 </body>
 </html>
